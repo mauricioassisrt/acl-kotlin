@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
   profiles:
     active: dev
   jpa:
@@ -10,3 +13,4 @@ spring:
 jwt:
   secret: d512ac60-133b-4318-b038-97c9c64439d9
   expiration: 999999
+
