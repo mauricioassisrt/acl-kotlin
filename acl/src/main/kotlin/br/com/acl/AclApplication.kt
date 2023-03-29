@@ -1,4 +1,4 @@
-package br.com.acl.acl
+package br.com.acl
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
