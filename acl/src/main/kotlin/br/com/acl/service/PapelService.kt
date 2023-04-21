@@ -22,4 +22,6 @@ class PapelService {
         papelRepository.findById(id).orElseThrow {
             NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
         }
+
+    fun create(papel: PapelModel) = papelRepository.save(papel)
 }

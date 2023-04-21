@@ -37,19 +37,10 @@
           </stringArguments>
           <arrayArguments>
             <arrayArg name="pluginClasspaths">
-              <args>
-                <arg>$KOTLIN_BUNDLED$/lib/noarg-compiler-plugin.jar</arg>
-                <arg>$KOTLIN_BUNDLED$/lib/allopen-compiler-plugin.jar</arg>
-              </args>
+              <args>$KOTLIN_BUNDLED$/lib/allopen-compiler-plugin.jar</args>
             </arrayArg>
             <arrayArg name="pluginOptions">
               <args>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=javax.persistence.Entity</arg>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=javax.persistence.Embeddable</arg>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=javax.persistence.MappedSuperclass</arg>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=jakarta.persistence.Entity</arg>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=jakarta.persistence.Embeddable</arg>
-                <arg>plugin:org.jetbrains.kotlin.noarg:annotation=jakarta.persistence.MappedSuperclass</arg>
                 <arg>plugin:org.jetbrains.kotlin.allopen:annotation=org.springframework.stereotype.Component</arg>
                 <arg>plugin:org.jetbrains.kotlin.allopen:annotation=org.springframework.transaction.annotation.Transactional</arg>
                 <arg>plugin:org.jetbrains.kotlin.allopen:annotation=org.springframework.scheduling.annotation.Async</arg>

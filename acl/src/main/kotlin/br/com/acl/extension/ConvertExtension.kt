@@ -1,5 +1,6 @@
 package br.com.acl.extension
 
+import br.com.acl.controller.request.PostPapelRequest
 import br.com.acl.controller.response.PageResponse
 import br.com.acl.controller.response.PapelResponse
 import br.com.acl.model.PapelModel
@@ -18,5 +19,12 @@ fun <T> Page<T>.toPageResponse(): PageResponse<T> {
             this.number,
             this.totalElements,
             this.totalPages
+    )
+}
+
+fun PostPapelRequest.toPapelModel(): PapelModel {
+    return PapelModel(
+        nome = this.nome,
+        descricao = this.descricao,
     )
 }
