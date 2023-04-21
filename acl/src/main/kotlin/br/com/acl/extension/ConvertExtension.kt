@@ -1,6 +1,7 @@
 package br.com.acl.extension
 
 import br.com.acl.controller.request.PostPapelRequest
+import br.com.acl.controller.request.PutPapelRequest
 import br.com.acl.controller.response.PageResponse
 import br.com.acl.controller.response.PapelResponse
 import br.com.acl.model.PapelModel
@@ -19,6 +20,13 @@ fun <T> Page<T>.toPageResponse(): PageResponse<T> {
             this.number,
             this.totalElements,
             this.totalPages
+    )
+}
+fun PutPapelRequest.toPapelModel(papelModel: PapelModel): PapelModel {
+    return PapelModel(
+        id = papelModel.id,
+        nome = this.nome ?: papelModel.nome,
+        descricao = this.descricao ?: papelModel.descricao
     )
 }
 

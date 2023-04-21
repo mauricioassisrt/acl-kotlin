@@ -24,4 +24,17 @@ class PapelService {
         }
 
     fun create(papel: PapelModel) = papelRepository.save(papel)
+    fun delete(id: Long) {
+        if(!papelRepository.existsById(id!!))
+            throw NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
+        var papel = findById(id)
+        papelRepository.delete(papel)
+    }
+
+    fun update(papelModel: PapelModel) {
+        if(!papelRepository.existsById(papelModel.id!!))
+            throw NotFoundException(Errors.ML201.message.format(papelModel.id), Errors.ML201.code)
+
+        papelRepository.save(papelModel)
+    }
 }
