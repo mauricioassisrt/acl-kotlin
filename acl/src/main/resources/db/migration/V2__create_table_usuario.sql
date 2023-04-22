@@ -5,9 +5,7 @@ create table usuario
     nome  varchar(255) null,
     senha varchar(255) null,
     status varchar(100) null,
-    papel_id int         not null,
-    papel   varchar(50) not null,
+    papel_id int not null,
     FOREIGN KEY (papel_id) REFERENCES  papel(id)
-
 );
 

@@ -8,7 +8,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Table
 
-@Entity()
+@Entity
 @Table(name = "papel")
 data class PapelModel(
         @Id
@@ -22,4 +22,6 @@ data class PapelModel(
         @Column(name = "descricao")
         var descricao: String? = null,
 
-):  Serializable
+){
+        constructor() : this(null, "", "")
+}
