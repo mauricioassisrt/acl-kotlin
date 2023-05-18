@@ -23,7 +23,7 @@ class AuthenticationFilter(
         try {
             val loginRequest = jacksonObjectMapper().readValue(request.inputStream, LoginRequest::class.java)
             val id = userRepository.findByEmail(loginRequest.email)?.id
-            val authToken = UsernamePasswordAuthenticationToken(id, loginRequest.password)
+            val authToken = UsernamePasswordAuthenticationToken(id, loginRequest.senha)
             return authenticationManager.authenticate(authToken)
         } catch (ex: Exception) {
             throw AuthenticationException("Falha ao autenticar", "999")
@@ -31,7 +31,7 @@ class AuthenticationFilter(
     }
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
-        val id = (authResult.principal as UserCustomerDetails).id
+        val id = (authResult.principal as UsuarioDetailhes).id
         val token = jwtUtil.generateToken(id)
         response.addHeader("Autorization", "Bearer $token")
     }

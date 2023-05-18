@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse
 import org.springframework.security.core.userdetails.UserDetailsService
 class AuthorizationFilter(
         authenticationManager: AuthenticationManager,
-        private val userDetailsService: UserDetailsService,
+        private val usuarioDetalhesService: UserDetailsService,
         private val jwtUtil: JwtUtil
 ) : BasicAuthenticationFilter(authenticationManager) {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
@@ -29,7 +29,7 @@ class AuthorizationFilter(
             throw AuthenticationException("Token Invalido ", "9999")
         }
         val subject = jwtUtil.getSubject(token)
-        val customer = userDetailsService.loadUserByUsername(subject)
-        return UsernamePasswordAuthenticationToken(customer, null, customer.authorities)
+        val usuario = usuarioDetalhesService.loadUserByUsername(subject)
+        return UsernamePasswordAuthenticationToken(usuario, null, usuario.authorities)
     }
 }
