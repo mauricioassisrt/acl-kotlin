@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UsuarioRepository : JpaRepository<UsuarioModel, Int> {
     override fun findAll(pageable: Pageable): Page<UsuarioModel>
+    fun findByEmail(email: String):UsuarioModel?
 }

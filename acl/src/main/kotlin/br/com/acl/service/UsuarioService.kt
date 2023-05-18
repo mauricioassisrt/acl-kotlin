@@ -8,13 +8,15 @@ import br.com.acl.repository.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class UsuarioService {
     @Autowired
     private lateinit var usuarioRepository: UsuarioRepository
-
+    @Autowired
+    private lateinit var bCrypt: BCryptPasswordEncoder
     fun findAll(pageable: Pageable): Page<UsuarioModel> {
         return usuarioRepository.findAll(pageable)
     }
@@ -25,7 +27,8 @@ class UsuarioService {
         }
 
     fun create(usuario: UsuarioModel) {
-        usuarioRepository.save(usuario)
+        val usuarioCopy = usuario.copy(senha = bCrypt.encode(usuario.senha))
+        usuarioRepository.save(usuarioCopy)
     }
     fun delete(id: Int) {
         if(!usuarioRepository.existsById(id!!))
