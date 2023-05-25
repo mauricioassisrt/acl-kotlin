@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service
 class UsuarioService {
     @Autowired
     private lateinit var usuarioRepository: UsuarioRepository
+
     @Autowired
     private lateinit var bCrypt: BCryptPasswordEncoder
     fun findAll(pageable: Pageable): Page<UsuarioModel> {
@@ -30,8 +31,9 @@ class UsuarioService {
         val usuarioCopy = usuario.copy(senha = bCrypt.encode(usuario.senha))
         usuarioRepository.save(usuarioCopy)
     }
+
     fun delete(id: Int) {
-        if(!usuarioRepository.existsById(id!!))
+        if (!usuarioRepository.existsById(id!!))
             throw NotFoundException(Errors.ML301.message.format(id), Errors.ML201.code)
         var usuario = findById(id)
         usuario.status = Status.INATIVO
@@ -39,9 +41,8 @@ class UsuarioService {
     }
 
     fun update(usuarioModel: UsuarioModel) {
-        if(!usuarioRepository.existsById(usuarioModel.id!!))
+        if (!usuarioRepository.existsById(usuarioModel.id!!))
             throw NotFoundException(Errors.ML301.message.format(usuarioModel.id), Errors.ML301.code)
-
-        usuarioRepository.save(usuarioModel)
+        usuarioRepository.save(usuarioModel.copy(senha = bCrypt.encode(usuarioModel.senha)))
     }
 }

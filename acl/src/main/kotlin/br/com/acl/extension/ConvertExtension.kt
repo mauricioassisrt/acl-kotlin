@@ -14,11 +14,13 @@ import org.springframework.data.domain.Page
 
 fun PapelModel.toResponse(): PapelResponse {
     return PapelResponse(
-            id = this.id,
-            nome = this.nome,
-            descricao = this.descricao
+        id = this.id,
+        nome = this.nome,
+        descricao = this.descricao,
+        papelFuncao = this.papelFuncao
     )
 }
+
 fun UsuarioModel.toResponse(): UsuarioResponse {
     return UsuarioResponse(
         id = this.id,
@@ -27,8 +29,9 @@ fun UsuarioModel.toResponse(): UsuarioResponse {
         email = this.email,
         status = this.status,
         papel = this.papel
-        )
+    )
 }
+
 fun PutUsuarioRequest.toUsuarioModel(usuarioModel: UsuarioModel): UsuarioModel {
     return UsuarioModel(
         id = usuarioModel.id,
@@ -39,6 +42,7 @@ fun PutUsuarioRequest.toUsuarioModel(usuarioModel: UsuarioModel): UsuarioModel {
         papel = usuarioModel.papel
     )
 }
+
 fun PostUsuarioRequest.toUsuarioModel(papelModel: PapelModel): UsuarioModel {
     return UsuarioModel(
         nome = this.nome,
@@ -48,19 +52,21 @@ fun PostUsuarioRequest.toUsuarioModel(papelModel: PapelModel): UsuarioModel {
         papel = papelModel
     )
 }
+
 fun <T> Page<T>.toPageResponse(): PageResponse<T> {
     return PageResponse(
-            this.content,
-            this.number,
-            this.totalElements,
-            this.totalPages
+        this.content,
+        this.number,
+        this.totalElements,
+        this.totalPages
     )
 }
+
 fun PutPapelRequest.toPapelModel(papelModel: PapelModel): PapelModel {
     return PapelModel(
         id = papelModel.id,
         nome = this.nome ?: papelModel.nome,
-        descricao = this.descricao ?: papelModel.descricao
+        descricao = this.descricao ?: papelModel.descricao,
     )
 }
 

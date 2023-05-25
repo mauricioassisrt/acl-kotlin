@@ -33,10 +33,10 @@ class SecurityConfig(
     // liberar uma URL especifica
     private val PUBLIC_MATCHERS = arrayOf<String>()
 
-    private val ADMIN_MATCHERS = arrayOf(
+    private val USUARIO = arrayOf(
         "/api/usuarios/"
     )
-    private val PUBLIC_POST_MATCHERS = arrayOf(
+    private val PAPEL = arrayOf(
         "/api/papeis/"
     )
 
@@ -48,8 +48,8 @@ class SecurityConfig(
         http.cors().and().csrf().disable()
         http.authorizeRequests()
             .antMatchers(*PUBLIC_MATCHERS).permitAll()
-            .antMatchers(HttpMethod.GET, *PUBLIC_POST_MATCHERS).permitAll()
-            .antMatchers(*ADMIN_MATCHERS).hasAuthority("ROLE_ADMIN")
+            .antMatchers(HttpMethod.GET, *PAPEL).permitAll()
+            .antMatchers(*USUARIO).authenticated()
             .anyRequest().authenticated()
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
@@ -57,10 +57,14 @@ class SecurityConfig(
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.exceptionHandling().authenticationEntryPoint(customerAuthenticationEntryPoint)
     }
+
     override fun configure(web: WebSecurity) {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-            "/swagger-ui.html", "/webjars/**")
+        web.ignoring().antMatchers(
+            "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+            "/swagger-ui.html", "/webjars/**"
+        )
     }
+
     @Bean
     fun corsConfig(): CorsFilter {
         val source = UrlBasedCorsConfigurationSource()
@@ -72,6 +76,7 @@ class SecurityConfig(
         source.registerCorsConfiguration("/**", config)
         return CorsFilter(source)
     }
+
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder? {
         return BCryptPasswordEncoder()

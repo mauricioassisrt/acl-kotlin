@@ -39,19 +39,20 @@ class UsuarioController() {
     @GetMapping("{id}")
     fun findById(@PathVariable id: Int): UsuarioResponse = usuarioService.findById(id).toResponse()
 
+    @UserCanOnlyAccessTheirOwnResource
     @GetMapping
-    //@UserCanOnlyAccessTheirOwnResource
     fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<UsuarioResponse> {
         return usuarioService.findAll(pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid usuario: PostUsuarioRequest){
-        val papel =  papelService.findById(usuario.papelId.toLong())
+    fun create(@RequestBody @Valid usuario: PostUsuarioRequest) {
+        val papel = papelService.findById(usuario.papelId.toLong())
         usuarioService.create(usuario.toUsuarioModel(papel))
     }
-    @DeleteMapping ("{id}")
+
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Int) = usuarioService.delete(id)
 

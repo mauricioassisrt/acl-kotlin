@@ -27,4 +27,6 @@ data class UsuarioModel(
     @ManyToOne
     @JoinColumn(name = "papel_id")
     var papel: PapelModel? = null
-)
+){
+    constructor(): this(null, "", "", Status.INATIVO,  "", null)
+}
