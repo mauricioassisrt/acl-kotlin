@@ -8,19 +8,19 @@ import javax.persistence.*
 @Entity
 @Table(name = "papel")
 data class PapelModel(
-        @Id
-        @Column(name = "id")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long? = null,
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
 
-        @Column(name = "nome")
-        var nome: String? = null,
+    @Column(name = "nome")
+    var nome: String? = null,
 
-        @Column(name = "descricao")
-        var descricao: String? = null,
-        @OneToMany(mappedBy = "papel", cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.EAGER)
-        @JsonManagedReference
-        var papelFuncao: MutableList<PapelFuncaoModel>? = null
-){
-        constructor() : this(null, "", "", null)
+    @Column(name = "descricao")
+    var descricao: String? = null,
+    @OneToMany(mappedBy = "papel", cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.EAGER)
+    @JsonManagedReference
+    var papelFuncao: MutableList<PapelFuncaoModel>? = null
+) {
+    constructor() : this(null, "", "", null)
 }

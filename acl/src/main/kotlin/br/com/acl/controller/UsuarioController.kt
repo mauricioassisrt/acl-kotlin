@@ -7,7 +7,6 @@ import br.com.acl.controller.response.UsuarioResponse
 import br.com.acl.extension.toPageResponse
 import br.com.acl.extension.toUsuarioModel
 import br.com.acl.extension.toResponse
-import br.com.acl.security.UserCanOnlyAccessTheirOwnResource
 import br.com.acl.service.PapelService
 import br.com.acl.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +38,6 @@ class UsuarioController() {
     @GetMapping("{id}")
     fun findById(@PathVariable id: Int): UsuarioResponse = usuarioService.findById(id).toResponse()
 
-    @UserCanOnlyAccessTheirOwnResource
     @GetMapping
     fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<UsuarioResponse> {
         return usuarioService.findAll(pageable).map { it.toResponse() }.toPageResponse()

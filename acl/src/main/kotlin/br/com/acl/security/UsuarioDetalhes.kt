@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class UsuarioDetailhes(private val usuarioModel: UsuarioModel) : UserDetails {
+class UsuarioDetalhes(private val usuarioModel: UsuarioModel) : UserDetails {
     val id: Int = usuarioModel.id!!
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return usuarioModel.papel?.papelFuncao!!.map {

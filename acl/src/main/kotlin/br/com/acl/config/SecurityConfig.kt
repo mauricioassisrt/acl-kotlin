@@ -25,16 +25,17 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
-    private val customerRepository: UsuarioRepository,
+    private val usuarioRepository: UsuarioRepository,
     private val userDetails: UserDetailsService,
     private val jwtUtil: JwtUtil,
-    private val customerAuthenticationEntryPoint: UsuarioAuthenticationEntryPoint
+    private val usuarioAuthenticationEntryPoint: UsuarioAuthenticationEntryPoint
 ) : WebSecurityConfigurerAdapter() {
-    // liberar uma URL especifica
     private val PUBLIC_MATCHERS = arrayOf<String>()
-
     private val USUARIO = arrayOf(
         "/api/usuarios/"
+    )
+    private val SWAGGER = arrayOf(
+        "/swagger-ui/index.html"
     )
     private val PAPEL = arrayOf(
         "/api/papeis/"
@@ -48,20 +49,25 @@ class SecurityConfig(
         http.cors().and().csrf().disable()
         http.authorizeRequests()
             .antMatchers(*PUBLIC_MATCHERS).permitAll()
-            .antMatchers(HttpMethod.GET, *PAPEL).permitAll()
+            .antMatchers(*PAPEL).authenticated()
             .antMatchers(*USUARIO).authenticated()
+            .antMatchers(*SWAGGER).permitAll()
             .anyRequest().authenticated()
-        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
+        http.addFilter(AuthenticationFilter(authenticationManager(), usuarioRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        http.exceptionHandling().authenticationEntryPoint(customerAuthenticationEntryPoint)
+        http.exceptionHandling().authenticationEntryPoint(usuarioAuthenticationEntryPoint)
     }
 
     override fun configure(web: WebSecurity) {
         web.ignoring().antMatchers(
-            "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-            "/swagger-ui.html", "/webjars/**"
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/**",
+            "/swagger-ui.html",
+            "/webjars/**"
         )
     }
 

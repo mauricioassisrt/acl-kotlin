@@ -21,6 +21,6 @@ data class PapelFuncaoModel(
     @JoinColumn(name = "funcao_id")
     @JsonManagedReference
     val funcao: FuncaoModel? = null
-){
+) {
     constructor() : this(null, null, null)
 }

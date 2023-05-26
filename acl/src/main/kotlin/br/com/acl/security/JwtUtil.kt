@@ -19,10 +19,10 @@ class JwtUtil {
     private val secret: String? = null
     fun generateToken(id: Int): String {
         return Jwts.builder()
-                .setSubject(id.toString())
-                .setExpiration(Date(System.currentTimeMillis() + expiration!!))
-                .signWith(SignatureAlgorithm.HS512, secret!!.toByteArray())
-                .compact()
+            .setSubject(id.toString())
+            .setExpiration(Date(System.currentTimeMillis() + expiration!!))
+            .signWith(SignatureAlgorithm.HS512, secret!!.toByteArray())
+            .compact()
     }
 
     fun isValidToken(token: String): Boolean {
@@ -36,7 +36,7 @@ class JwtUtil {
     private fun getClaims(token: String): Claims {
         try {
             return Jwts.parser().setSigningKey(secret!!.toByteArray()).parseClaimsJws(token).body
-        } catch (ex:Exception) {
+        } catch (ex: Exception) {
             throw AuthenticationException("Token Invalido", "9999")
         }
     }

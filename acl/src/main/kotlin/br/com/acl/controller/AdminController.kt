@@ -12,13 +12,13 @@ class AdminController {
 
 
     @GetMapping("/report")
-    fun report(@RequestParam name: String?): String{
+    fun report(@RequestParam name: String?): String {
         return "This is report, Only admin can see it"
     }
 
     @Hidden
     @GetMapping("/repoasdasdasrt")
-    fun teste(@RequestParam name: String?): String{
+    fun teste(@RequestParam name: String?): String {
         return "This is report, Only admin can see it"
     }
 }

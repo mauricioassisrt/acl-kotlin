@@ -10,10 +10,11 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.security.core.userdetails.UserDetailsService
+
 class AuthorizationFilter(
-        authenticationManager: AuthenticationManager,
-        private val usuarioDetalhesService: UserDetailsService,
-        private val jwtUtil: JwtUtil
+    authenticationManager: AuthenticationManager,
+    private val usuarioDetalhesService: UserDetailsService,
+    private val jwtUtil: JwtUtil
 ) : BasicAuthenticationFilter(authenticationManager) {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val authorization = request.getHeader("Authorization")
