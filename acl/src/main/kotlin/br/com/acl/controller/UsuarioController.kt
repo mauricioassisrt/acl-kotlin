@@ -7,6 +7,7 @@ import br.com.acl.controller.response.UsuarioResponse
 import br.com.acl.extension.toPageResponse
 import br.com.acl.extension.toUsuarioModel
 import br.com.acl.extension.toResponse
+import br.com.acl.security.preauthorize.*
 import br.com.acl.service.PapelService
 import br.com.acl.service.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,37 +28,37 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/usuarios/")
-class UsuarioController() {
+class UsuarioController {
+
     @Autowired
     private lateinit var usuarioService: UsuarioService
 
     @Autowired
     private lateinit var papelService: PapelService
 
-
+    @UsuarioFindById
     @GetMapping("{id}")
     fun findById(@PathVariable id: Int): UsuarioResponse = usuarioService.findById(id).toResponse()
 
+    @UsuarioFindAll
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<UsuarioResponse> {
-        return usuarioService.findAll(pageable).map { it.toResponse() }.toPageResponse()
-    }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<UsuarioResponse> =
+        usuarioService.findAll(pageable).map { it.toResponse() }.toPageResponse()
 
+    @UsuarioPost
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid usuario: PostUsuarioRequest) {
-        val papel = papelService.findById(usuario.papelId.toLong())
-        usuarioService.create(usuario.toUsuarioModel(papel))
-    }
+    fun create(@RequestBody @Valid usuario: PostUsuarioRequest) =
+        usuarioService.create(usuario.toUsuarioModel(papelService.findById(usuario.papelId)))
 
+    @UsuarioDelete
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Int) = usuarioService.delete(id)
 
+    @UsuarioPut
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody @Valid usuario: PutUsuarioRequest) {
-        val usuarioExist = usuarioService.findById(id)
-        usuarioService.update(usuario.toUsuarioModel(usuarioExist))
-    }
+    fun update(@PathVariable id: Int, @RequestBody @Valid usuario: PutUsuarioRequest) =
+        usuarioService.update(usuario.toUsuarioModel(usuarioService.findById(id)))
 }

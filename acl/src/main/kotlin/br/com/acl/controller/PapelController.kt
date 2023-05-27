@@ -7,7 +7,7 @@ import br.com.acl.controller.response.PapelResponse
 import br.com.acl.extension.toPageResponse
 import br.com.acl.extension.toPapelModel
 import br.com.acl.extension.toResponse
-import br.com.acl.security.PapelFindById
+import br.com.acl.security.preauthorize.*
 import br.com.acl.service.PapelService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -35,25 +35,25 @@ class PapelController() {
     @GetMapping("{id}")
     fun findById(@PathVariable id: Long): PapelResponse = papelService.findById(id).toResponse()
 
+    @PapelFindAll
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<PapelResponse> {
-        return papelService.findAll(pageable).map { it.toResponse() }.toPageResponse()
-    }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<PapelResponse> =
+        papelService.findAll(pageable).map { it.toResponse() }.toPageResponse()
 
+    @PapelPost
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid papel: PostPapelRequest) {
-        papelService.create(papel.toPapelModel())
-    }
+    fun create(@RequestBody @Valid papel: PostPapelRequest) = papelService.create(papel.toPapelModel())
 
+    @PapelDelete
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Long) = papelService.delete(id)
 
+    @PapelPut
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Long, @RequestBody @Valid papel: PutPapelRequest) {
-        val papelSaved = papelService.findById(id)
-        papelService.update(papel.toPapelModel(papelSaved))
-    }
+    fun update(@PathVariable id: Long, @RequestBody @Valid papel: PutPapelRequest) =
+        papelService.update(papel.toPapelModel(papelService.findById(id)))
+
 }

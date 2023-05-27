@@ -14,9 +14,9 @@ class PapelService {
     @Autowired
     private lateinit var papelRepository: PapelRepository
 
-    fun findAll(pageable: Pageable): Page<PapelModel> {
-        return papelRepository.findAll(pageable)
-    }
+    fun findAll(pageable: Pageable): Page<PapelModel> =
+        papelRepository.findAll(pageable)
+
 
     fun findById(id: Long): PapelModel =
         papelRepository.findById(id).orElseThrow {
@@ -25,14 +25,13 @@ class PapelService {
 
     fun create(papel: PapelModel) = papelRepository.save(papel)
     fun delete(id: Long) {
-        if(!papelRepository.existsById(id!!))
+        if (!papelRepository.existsById(id!!))
             throw NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
-        var papel = findById(id)
-        papelRepository.delete(papel)
+        papelRepository.delete(findById(id))
     }
 
     fun update(papelModel: PapelModel) {
-        if(!papelRepository.existsById(papelModel.id!!))
+        if (!papelRepository.existsById(papelModel.id!!))
             throw NotFoundException(Errors.ML201.message.format(papelModel.id), Errors.ML201.code)
 
         papelRepository.save(papelModel)

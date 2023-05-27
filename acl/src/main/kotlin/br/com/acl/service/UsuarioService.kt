@@ -18,19 +18,16 @@ class UsuarioService {
 
     @Autowired
     private lateinit var bCrypt: BCryptPasswordEncoder
-    fun findAll(pageable: Pageable): Page<UsuarioModel> {
-        return usuarioRepository.findAll(pageable)
-    }
+    fun findAll(pageable: Pageable): Page<UsuarioModel> = usuarioRepository.findAll(pageable)
 
     fun findById(id: Int): UsuarioModel =
         usuarioRepository.findById(id).orElseThrow {
             NotFoundException(Errors.ML301.message.format(id), Errors.ML201.code)
         }
 
-    fun create(usuario: UsuarioModel) {
-        val usuarioCopy = usuario.copy(senha = bCrypt.encode(usuario.senha))
-        usuarioRepository.save(usuarioCopy)
-    }
+    fun create(usuario: UsuarioModel) =
+        usuarioRepository.save(usuario.copy(senha = bCrypt.encode(usuario.senha)))
+
 
     fun delete(id: Int) {
         if (!usuarioRepository.existsById(id!!))
