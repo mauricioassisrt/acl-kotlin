@@ -1,0 +1,27 @@
+.login-page {
+  background: url('https://tecnofit-site.s3.sa-east-1.amazonaws.com/media/files/2021/10/29155047/pexels-photo-2247179-1860x1080.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.login-box {
+  width: 360px;
+  margin: 0 auto;
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-logo img {
+  width: 150px;
+}
+
+.login-box-body {
+  background: #fff;
+  padding: 20px;
+}
+
+.login-box-body .col-xs-12 {
+  margin-bottom: 10px;
+}
