@@ -35,4 +35,18 @@ Language Support for Java(TM)
 Kotlin Language
 Kotlin
 
-Agora basta abrir o projeto pelo VSCode dar clean install com o maven e após isso ir na opção 
+Agora basta abrir o projeto pelo VSCode dar clean install com o maven 
+
+Instalar o angular e nvm
+Instalar o nvm após isso rodar o comando 
+nvm install 12.20.2
+após isso selecionar a versão instalada
+depois ir no diretorio que está o projeto do angular 
+src\main\webapp\acl e rodar npm install
+
+
+Para instalar o angular rodar o comando npm install -g @angular/cli@12
+checar se o angular esta instalado ng -version
+após isso rodar o comando npm start ou ng serve
+
+
