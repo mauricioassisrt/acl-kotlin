@@ -5,7 +5,7 @@ Java: 17
 Kotlin: 1.7.22
 
 Passo a passo instalação do projeto:
-Extrair a pasta util
+Extrair a pasta util https://drive.google.com/file/d/1_jjLCMKMSDvtVLZE15jbqAImDBJEzCD7/view?usp=sharing
 copiar os arquivos para o diretorio desejado
 
 Configurar as variaveis de ambiente:

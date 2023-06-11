@@ -2,6 +2,7 @@ package br.com.acl.security
 
 
 import br.com.acl.exception.AuthenticationException
+import br.com.acl.model.UsuarioModel
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -17,9 +18,12 @@ class JwtUtil {
 
     @Value("\${jwt.secret}")
     private val secret: String? = null
-    fun generateToken(id: Int): String {
+    fun generateToken(id: Int, usuario:UsuarioModel): String {
+        val claims = HashMap<String, Any>()
+        claims["usuario"] = usuario
         return Jwts.builder()
             .setSubject(id.toString())
+            .setClaims(claims)
             .setExpiration(Date(System.currentTimeMillis() + expiration!!))
             .signWith(SignatureAlgorithm.HS512, secret!!.toByteArray())
             .compact()

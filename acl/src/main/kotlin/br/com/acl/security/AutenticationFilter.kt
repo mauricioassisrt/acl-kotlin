@@ -1,9 +1,11 @@
 package br.com.acl.security
 
 import br.com.acl.controller.request.LoginRequest
+import br.com.acl.controller.response.SuccessResponse
 import br.com.acl.exception.AuthenticationException
 import br.com.acl.repository.UsuarioRepository
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -32,7 +34,16 @@ class AuthenticationFilter(
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
         val id = (authResult.principal as UsuarioDetalhes).id
-        val token = jwtUtil.generateToken(id)
+        var usuario =  userRepository.findById(id)
+        val token = jwtUtil.generateToken(id, usuario.get())
+        response.contentType = "application/json"
+        response.status = HttpServletResponse.SC_OK
+
+        val responseSuccess = SuccessResponse(
+            HttpStatus.OK.value(),
+            "Bearer $token",
+        )
+        response.outputStream.print(jacksonObjectMapper().writeValueAsString(responseSuccess))
         response.addHeader("Authorization", "Bearer $token")
     }
 
