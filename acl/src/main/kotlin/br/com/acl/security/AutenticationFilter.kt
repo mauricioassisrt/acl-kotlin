@@ -34,14 +34,14 @@ class AuthenticationFilter(
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
         val id = (authResult.principal as UsuarioDetalhes).id
-        var usuario =  userRepository.findById(id)
+        val usuario =  userRepository.findById(id)
         val token = jwtUtil.generateToken(id, usuario.get())
         response.contentType = "application/json"
         response.status = HttpServletResponse.SC_OK
 
         val responseSuccess = SuccessResponse(
             HttpStatus.OK.value(),
-            "Bearer $token",
+            token,
         )
         response.outputStream.print(jacksonObjectMapper().writeValueAsString(responseSuccess))
         response.addHeader("Authorization", "Bearer $token")

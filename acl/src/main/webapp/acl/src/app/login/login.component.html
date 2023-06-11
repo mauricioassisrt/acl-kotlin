@@ -3,15 +3,17 @@
 
     <div class="login-box-body">
       <div class="login-logo">
-        <img src="https://img.freepik.com/vetores-premium/modelo-de-design-de-logotipo-de-academia-de-ginastica_565520-935.jpg" alt="Logo" class="img-responsive">
+        <img
+          src="https://img.freepik.com/vetores-premium/modelo-de-design-de-logotipo-de-academia-de-ginastica_565520-935.jpg"
+          alt="Logo" class="img-responsive">
       </div>
       <p class="login-box-msg">Faça o login para acessar</p>
-      <form>
+      <form (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" [(ngModel)]="login.email" class="form-control" placeholder="Email">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" placeholder="Senha">
+          <input type="password" name="senha" [(ngModel)]="login.senha" class="form-control" placeholder="Senha">
         </div>
         <div class="row">
           <div class="col-md-12">
