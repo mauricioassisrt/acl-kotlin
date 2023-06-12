@@ -10,6 +10,7 @@ declare var $: any;
 export class ToastComponent {
   @Input() title: string = "";
   @Input() message: string = "";
+  @Input() class: string = "";
 
   show() {
     $('.toast').toast({
