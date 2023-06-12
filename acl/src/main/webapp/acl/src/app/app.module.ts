@@ -10,20 +10,23 @@ import {PapelComponent} from './papel/papel.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./auth/services/login.service";
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    PapelComponent
+    PapelComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [
     LoginService

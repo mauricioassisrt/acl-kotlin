@@ -1,7 +1,8 @@
 <div class="login-page">
+  <app-toast #toast [title]="tituloError" [message]="menssagemError"></app-toast>
   <div class="login-box">
 
-    <div class="login-box-body">
+    <div class="login-box-body login-form">
       <div class="login-logo">
         <img
           src="https://img.freepik.com/vetores-premium/modelo-de-design-de-logotipo-de-academia-de-ginastica_565520-935.jpg"
@@ -24,7 +25,11 @@
           </div>
 
         </div>
+        <div class="overlay" *ngIf="loading">
+          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
       </form>
+
     </div>
   </div>
 </div>
