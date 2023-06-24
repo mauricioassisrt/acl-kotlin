@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../environments/environment";
 
 import jwt_decode from 'jwt-decode';
+import {HttpResponse} from "../model/http-response";
 
 
 @Injectable({
@@ -11,11 +12,13 @@ import jwt_decode from 'jwt-decode';
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) {}
-
-  login(email: string, senha: string): Observable<any> {
-    return this.http.post(`${environment.api}/login`, { email, senha });
+  constructor(private http: HttpClient) {
   }
+
+  autenticarUsuario(email: string, senha: string): Observable<HttpResponse> {
+    return this.http.post<HttpResponse>(`${environment.api}/login`, {email, senha});
+  }
+
   getDados(): Observable<any> {
     // const url = 'http://localhost:8080/api/papeis/'; // Substitua pela URL correta do seu endpoint Spring Boot
     //
@@ -34,13 +37,10 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
   logout(): void {
     localStorage.removeItem('token');
   }
+
   getAuthorizationToken() {
     return window.localStorage.getItem('token');
   }
@@ -48,9 +48,8 @@ export class LoginService {
   getTokenExpirationDate(token: string): Date {
     const decoded: any = jwt_decode(token);
 
-    if (decoded.exp === undefined) {
+    if (decoded.exp === undefined)
       return new Date(0);
-    }
 
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
@@ -58,25 +57,21 @@ export class LoginService {
   }
 
   isTokenExpired(token?: string): boolean {
-    if (!token) {
+    if (!token)
       return true;
-    }
 
-    const date = this.getTokenExpirationDate(token);
-    if (date === undefined) {
-      return false;
-    }
+    if (this.getTokenExpirationDate(token) === undefined)
+      return false
 
-    return !(date.valueOf() > new Date().valueOf());
+    return !(this.getTokenExpirationDate(token).valueOf() > new Date().valueOf());
   }
 
   isUserLoggedIn() {
     const token = this.getAuthorizationToken();
-    if (!token) {
+    if (!token)
       return false;
-    } else if (this.isTokenExpired(token)) {
+    else if (this.isTokenExpired(token))
       return false;
-    }
 
     return true;
   }

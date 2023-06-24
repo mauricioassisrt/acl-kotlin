@@ -1,7 +1,6 @@
 import {Injectable, ViewChild} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {ToastComponent} from "../toast/toast.component";
-import {ToastOptions} from "../toast/toast-options";
+import {ToastComponent} from "../../util/toast/toast.component";
 
 
 @Injectable({
@@ -9,19 +8,19 @@ import {ToastOptions} from "../toast/toast-options";
 })
 export class LoginGuard implements CanActivate {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
-  toastOptions: ToastOptions = new ToastOptions()
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot):  boolean {
+    state: RouterStateSnapshot): boolean {
     const token = window.localStorage.getItem('token')
-    if (token) {
+    if (token)
       return true;
-    } else {
+    else
       this.router.navigate(['login']);
       return false;
-    }
   }
 
 }

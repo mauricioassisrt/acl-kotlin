@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoginService} from "../auth/services/login.service";
+import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
-import {ToastComponent} from "../toast/toast.component";
-import {ToastOptions} from "../toast/toast-options";
+import {ToastComponent} from "../../util/toast/toast.component";
+import {ToastOptions} from "../../util/toast/toast-options";
+import {Login} from "../../model/login";
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,7 @@ import {ToastOptions} from "../toast/toast-options";
 export class LoginComponent implements OnInit {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   toastOptions: ToastOptions = new ToastOptions()
-  login = {
-    email: "",
-    senha: "",
-  }
+  login: Login = new Login();
   loading: boolean = false;
 
   constructor(private authService: LoginService,
@@ -24,28 +22,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.getToken() != null) {
+    if (this.authService.getToken() != null)
       this.route.navigate([''])
-    } else {
+    else
       this.route.navigate(['login'])
-    }
 
   }
 
   onSubmit() {
     this.loading = true
-    this.authService.login(this.login.email, this.login.senha).subscribe(
-      (response) => {
+    this.authService.autenticarUsuario(this.login.email, this.login.senha).subscribe(
+      (httpResponse) => {
         this.loading = false
-        const token = response.token; // Supondo que sua API retorne um objeto com um token
-        this.authService.setToken(token);
+        this.authService.setToken(httpResponse.token);
         // Redirecionar para outra rota, por exemplo, a página inicial
         this.route.navigate(['']);
       },
       (error) => {
-        this.toastOptions.menssagemError =  error.error.message;
-        this.toastOptions.tituloError =  "Falha ao autenticar";
-        this.toastOptions.classError ="bg-warning"
+        this.toastOptions.menssagemError = error.error.message;
+        this.toastOptions.tituloError = "Falha ao autenticar";
+        this.toastOptions.classError = "bg-warning"
         this.toastComponent.show();
         this.loading = false
       }

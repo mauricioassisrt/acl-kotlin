@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./layout/home/home.component";
-import {PapelComponent} from "./papel/papel.component";
-import {LoginComponent} from "./login/login.component";
-import {LoginGuard} from "./guard/login.guard";
+import {PapelComponent} from "./pages/papel/papel.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {LoginGuard} from "./auth-guard-interceptors/guard/login.guard";
 import {NotFoundComponent} from "./util/not-found/not-found.component";
 
 const routes: Routes = [

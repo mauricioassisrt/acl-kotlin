@@ -6,16 +6,14 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import {catchError, throwError} from 'rxjs';
-import {LoginService} from "../auth/services/login.service";
+import {LoginService} from "../../services/login.service";
 import jwt_decode from "jwt-decode";
 import {Router} from "@angular/router";
-import {ToastComponent} from "../toast/toast.component";
-import {ToastOptions} from "../toast/toast-options";
+import {ToastComponent} from "../../util/toast/toast.component";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
-  toastOptions: ToastOptions = new ToastOptions()
 
   constructor(private authService: LoginService,
               private route: Router) {
@@ -50,7 +48,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           this.authService.logout();
           this.route.navigate(['login'])
-          console.error('Erro de autenticação:', error.error);
         }
         return throwError(error);
       })

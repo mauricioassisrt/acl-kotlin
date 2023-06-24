@@ -14,7 +14,7 @@
           <i class="fa fa-power-off"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item"  (click)="logout()">
+          <a href="#" class="dropdown-item" (click)="logout()">
             <!-- Coloque aqui a rota ou função de logout -->
             Logout
           </a>
@@ -30,12 +30,60 @@
     <a href="#" class="brand-link">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <!-- Existing Menu Items -->
+          <li class="nav-item"  [class.active]="active === 'item1'">
+            <a href="#" class="nav-link"  (click)="menuSelecionado('item1')">
+              <i class="nav-icon fas fa-home"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+
+          <!-- New Item with Options -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Item with Options
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item" >
+                <a class="nav-link" [class.active]="active === 'item2'" (click)="menuSelecionado('item2')" href="#">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Option 1</p>
+                </a>
+              </li>
+              <li class="nav-item" >
+                <a class="nav-link" [class.active]="active === 'item3'" (click)="menuSelecionado('item3')" href="#">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Option 2</p>
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
   </aside>
-  <!-- /.sidebar -->
+  <!-- /.main-sidebar -->
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-   <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </div>
   <!-- /.content-wrapper -->
 

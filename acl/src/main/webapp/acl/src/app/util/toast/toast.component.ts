@@ -12,8 +12,6 @@ export class ToastComponent {
   @Input() options: ToastOptions = new ToastOptions();
 
   show() {
-    console.log(this.options);
-
     setTimeout(() => {
       $('.toast').toast({
         delay: 5000,

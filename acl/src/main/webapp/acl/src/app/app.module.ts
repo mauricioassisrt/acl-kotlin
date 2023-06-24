@@ -3,16 +3,16 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoginComponent} from './login/login.component';
-import {AuthModule} from "./auth/auth.module";
+import {LoginComponent} from './pages/login/login.component';
+import {AuthModule} from "./auth-guard-interceptors/auth.module";
 import {HomeComponent} from './layout/home/home.component';
-import {PapelComponent} from './papel/papel.component';
+import {PapelComponent} from './pages/papel/papel.component';
 import {FormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {LoginService} from "./auth/services/login.service";
-import { ToastComponent } from './toast/toast.component';
-import {AuthInterceptor} from "./http.interceptors/auth-interceptor";
-import { LoadingComponent } from './loading/loading.component';
+import {LoginService} from "./services/login.service";
+import { ToastComponent } from './util/toast/toast.component';
+import {AuthInterceptor} from "./auth-guard-interceptors/http-interceptors/auth-interceptor";
+import { LoadingComponent } from './util/loading/loading.component';
 import { NotFoundComponent } from './util/not-found/not-found.component';
 
 @NgModule({
