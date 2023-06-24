@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable, ViewChild} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ToastComponent} from "../toast/toast.component";
+import {ToastOptions} from "../toast/toast-options";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
+  toastOptions: ToastOptions = new ToastOptions()
   constructor(private router: Router) {}
 
   canActivate(

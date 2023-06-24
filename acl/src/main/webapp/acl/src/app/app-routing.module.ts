@@ -4,6 +4,7 @@ import {HomeComponent} from "./layout/home/home.component";
 import {PapelComponent} from "./papel/papel.component";
 import {LoginComponent} from "./login/login.component";
 import {LoginGuard} from "./guard/login.guard";
+import {NotFoundComponent} from "./util/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'login', pathMatch:'full'},
       {path: 'login', component: LoginComponent}
     ]
-  }
+  },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

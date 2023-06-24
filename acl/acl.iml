@@ -54,4 +54,10 @@
       </configuration>
     </facet>
   </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/acl/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/acl/dist" />
+    </content>
+  </component>
 </module>

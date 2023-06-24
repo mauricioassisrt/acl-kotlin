@@ -1,8 +1,6 @@
 <div class="login-page">
   <app-toast #toast
-             [title]="tituloError"
-             [message]="menssagemError"
-             [class]="classError" ></app-toast>
+             [options]="toastOptions" ></app-toast>
   <div class="login-box">
 
     <div class="login-box-body login-form">
@@ -28,9 +26,7 @@
           </div>
 
         </div>
-        <div class="overlay" *ngIf="loading">
-          <i class="fas fa-2x fa-sync-alt fa-spin"></i>
-        </div>
+      <app-loading [loading]="loading" ></app-loading>
       </form>
 
     </div>

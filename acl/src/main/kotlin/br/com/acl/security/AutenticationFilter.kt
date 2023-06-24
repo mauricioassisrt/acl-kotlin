@@ -35,7 +35,7 @@ class AuthenticationFilter(
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
         val id = (authResult.principal as UsuarioDetalhes).id
         val usuario =  userRepository.findById(id)
-        val token = jwtUtil.generateToken(id, usuario.get())
+        val token = jwtUtil.generateToken(id)
         response.contentType = "application/json"
         response.status = HttpServletResponse.SC_OK
 

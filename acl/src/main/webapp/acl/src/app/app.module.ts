@@ -8,9 +8,12 @@ import {AuthModule} from "./auth/auth.module";
 import {HomeComponent} from './layout/home/home.component';
 import {PapelComponent} from './papel/papel.component';
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./auth/services/login.service";
 import { ToastComponent } from './toast/toast.component';
+import {AuthInterceptor} from "./http.interceptors/auth-interceptor";
+import { LoadingComponent } from './loading/loading.component';
+import { NotFoundComponent } from './util/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,8 @@ import { ToastComponent } from './toast/toast.component';
     HomeComponent,
     PapelComponent,
     ToastComponent,
+    LoadingComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +34,11 @@ import { ToastComponent } from './toast/toast.component';
 
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     LoginService
   ],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {LoginService} from "../auth/services/login.service";
 import {Router} from "@angular/router";
 import {ToastComponent} from "../toast/toast.component";
+import {ToastOptions} from "../toast/toast-options";
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,7 @@ import {ToastComponent} from "../toast/toast.component";
 
 export class LoginComponent implements OnInit {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
-  tituloError: string = '';
-  menssagemError: string = '';
-  classError: string = '';
+  toastOptions: ToastOptions = new ToastOptions()
   login = {
     email: "",
     senha: "",
@@ -34,32 +33,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.startLoading();
+    this.loading = true
     this.authService.login(this.login.email, this.login.senha).subscribe(
       (response) => {
-        this.stopLoading();
+        this.loading = false
         const token = response.token; // Supondo que sua API retorne um objeto com um token
         this.authService.setToken(token);
         // Redirecionar para outra rota, por exemplo, a página inicial
         this.route.navigate(['']);
       },
       (error) => {
-        this.tituloError = "Falha ao autenticar";
-        this.menssagemError = error.error.message;
-        this.classError = "bg-warning"
+        this.toastOptions.menssagemError =  error.error.message;
+        this.toastOptions.tituloError =  "Falha ao autenticar";
+        this.toastOptions.classError ="bg-warning"
         this.toastComponent.show();
-        this.stopLoading();
+        this.loading = false
       }
     );
   }
-
-
-  startLoading() {
-    this.loading = true;
-  }
-
-  stopLoading() {
-    this.loading = false;
-  }
-
 }

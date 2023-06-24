@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {ToastOptions} from "./toast-options";
 
 declare var $: any;
 
@@ -8,13 +9,15 @@ declare var $: any;
   styleUrls: ['./toast.component.css']
 })
 export class ToastComponent {
-  @Input() title: string = "";
-  @Input() message: string = "";
-  @Input() class: string = "";
+  @Input() options: ToastOptions = new ToastOptions();
 
   show() {
-    $('.toast').toast({
-      delay: 5000
-    }).toast('show')
+    console.log(this.options);
+
+    setTimeout(() => {
+      $('.toast').toast({
+        delay: 5000,
+      }).toast('show');
+    }, 0);
   }
 }
