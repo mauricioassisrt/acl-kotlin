@@ -39,7 +39,7 @@
 
           <!-- Existing Menu Items -->
           <li class="nav-item"  [class.active]="active === 'item1'">
-            <a href="#" class="nav-link"  (click)="menuSelecionado('item1')">
+            <a class="nav-link" routerLink="/"  (click)="menuSelecionado('item1')">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Dashboard
@@ -49,24 +49,18 @@
 
           <!-- New Item with Options -->
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
-                Item with Options
+                Configurações
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item" >
-                <a class="nav-link" [class.active]="active === 'item2'" (click)="menuSelecionado('item2')" href="#">
+                <a class="nav-link" routerLink="/papel" [class.active]="active === 'item2'" (click)="menuSelecionado('item2')" href="#">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Option 1</p>
-                </a>
-              </li>
-              <li class="nav-item" >
-                <a class="nav-link" [class.active]="active === 'item3'" (click)="menuSelecionado('item3')" href="#">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Option 2</p>
+                  <p>Papel</p>
                 </a>
               </li>
             </ul>

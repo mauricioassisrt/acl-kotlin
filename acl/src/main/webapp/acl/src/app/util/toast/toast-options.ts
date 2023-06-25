@@ -1,6 +1,8 @@
+import {ToastComponent} from "./toast.component";
+
 export class ToastOptions {
-  private _tituloError: string ="";
-  private _menssagemError: string ="";
+  private _tituloError: string = "";
+  private _menssagemError: string = "";
   private _classError: string = "";
 
 
@@ -26,5 +28,16 @@ export class ToastOptions {
 
   set classError(value: string) {
     this._classError = value;
+  }
+
+  static montaToaster(mensagemError: string,
+                      tituloError: string,
+                      classError: string,
+                      toastOptions: ToastOptions,
+                      toastComponent: ToastComponent) {
+    toastOptions.menssagemError = mensagemError;
+    toastOptions.tituloError = tituloError;
+    toastOptions.classError = classError;
+    toastComponent.show();
   }
 }

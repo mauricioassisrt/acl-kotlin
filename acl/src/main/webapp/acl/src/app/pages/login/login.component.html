@@ -1,6 +1,6 @@
 <div class="login-page">
   <app-toast #toast
-             [options]="toastOptions" ></app-toast>
+             [options]="toastOptions"></app-toast>
   <div class="login-box">
 
     <div class="login-box-body login-form">
@@ -12,10 +12,18 @@
       <p class="login-box-msg">Faça o login para acessar</p>
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <input type="email" name="email" [(ngModel)]="login.email" class="form-control" placeholder="Email">
+          <input type="email" name="email"
+                 #emailInput
+                 [(ngModel)]="login.email"
+                 class="form-control"
+                 placeholder="Email">
         </div>
         <div class="form-group">
-          <input type="password" name="senha" [(ngModel)]="login.senha" class="form-control" placeholder="Senha">
+          <input type="password"
+                 #senhaInput name="senha"
+                 [(ngModel)]="login.senha"
+                 class="form-control"
+                 placeholder="Senha">
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -26,7 +34,7 @@
           </div>
 
         </div>
-      <app-loading [loading]="loading" ></app-loading>
+        <app-loading [loading]="loading"></app-loading>
       </form>
 
     </div>

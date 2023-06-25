@@ -28,3 +28,7 @@
 .login-form {
   position: relative;
 }
+
+.error-border {
+  border-color: red !important;
+}

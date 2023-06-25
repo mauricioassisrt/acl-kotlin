@@ -7,7 +7,7 @@ import {LoginComponent} from './pages/login/login.component';
 import {AuthModule} from "./auth-guard-interceptors/auth.module";
 import {HomeComponent} from './layout/home/home.component';
 import {PapelComponent} from './pages/papel/papel.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./services/login.service";
 import { ToastComponent } from './util/toast/toast.component';
@@ -31,7 +31,7 @@ import { NotFoundComponent } from './util/not-found/not-found.component';
     AuthModule,
     FormsModule,
     HttpClientModule,
-
+    ReactiveFormsModule
   ],
   providers: [
     {
