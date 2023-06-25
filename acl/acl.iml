@@ -56,8 +56,8 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/acl/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/acl/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/acl/tmp" />
     </content>
   </component>
 </module>

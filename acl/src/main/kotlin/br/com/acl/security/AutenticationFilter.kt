@@ -42,6 +42,7 @@ class AuthenticationFilter(
         val responseSuccess = SuccessResponse(
             HttpStatus.OK.value(),
             token,
+            authResult.authorities.toMutableList()
         )
         response.outputStream.print(jacksonObjectMapper().writeValueAsString(responseSuccess))
         response.addHeader("Authorization", "Bearer $token")

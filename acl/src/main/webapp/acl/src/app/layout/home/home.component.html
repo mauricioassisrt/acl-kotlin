@@ -49,7 +49,7 @@
 
           <!-- New Item with Options -->
           <li class="nav-item has-treeview">
-            <a class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
                 Configurações
@@ -58,7 +58,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item" >
-                <a class="nav-link" routerLink="/papel" [class.active]="active === 'item2'" (click)="menuSelecionado('item2')" href="#">
+                <a href="#" class="nav-link" routerLink="/papel" [class.active]="active === 'item2'" (click)="menuSelecionado('item2')" href="#">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Papel</p>
                 </a>
@@ -66,7 +66,29 @@
             </ul>
 
           </li>
+          <!-- New Item with Options -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Configurações
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item" >
+                <a href="#"
+                   class="nav-link"
+                   routerLink="/papel"
+                   [class.active]="active === 'item3'"
+                   (click)="menuSelecionado('item3')" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Papel</p>
+                </a>
+              </li>
+            </ul>
 
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
