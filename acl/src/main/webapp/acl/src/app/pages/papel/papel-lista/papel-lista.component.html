@@ -1,43 +1,62 @@
 <meta charset="UTF-8">
 <!-- Content Header (Page header) -->
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0"> {{this.titulo}}</h1>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- /.content-header -->
-
-<!-- Main content -->
+<br>
+<div class="col-sm-6">
+  <h2>{{this.titulo}}</h2>
+</div>
 <div class="container-fluid">
   <div class="card card-default">
     <div class="card-header">
       <h3 class="card-title">
         Listagem de papeis
       </h3>
+
+    </div>
+    <div class="card-header">
+    <div class="row">
+      <div class="col-md-6">
+        <form #f="ngForm" class="form-inline">
+          <div class="form-group">
+            <input [(ngModel)]="filter.nome" id="from" name="from" class="form-control" placeholder="Digite....">
+          </div>
+<!--          <div class="form-group">-->
+<!--            <label for="to">To:</label>-->
+<!--            <input [(ngModel)]="filter.descricao" id="to" name="to" class="form-control">-->
+<!--          </div>-->
+          <button (click)="search()" [disabled]="!f?.valid" class="btn btn-primary mt-2 mb-2"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+      <div class="col-md-6 text-right">
+        <a [routerLink]="['../papel/', 'new']" class="btn btn-default mb-2">New</a>
+      </div>
+    </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" *ngIf="papelList.length > 0">
       <app-loading [loading]="loading"></app-loading>
+      <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
       <table class="table table-bordered">
         <thead>
         <tr>
           <th style="width: 10px">Código</th>
+          <th>Nome</th>
           <th>Descrição</th>
           <th>Ação</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let papel of papel">
+        <tr *ngFor="let papel of papelList" [class.active]="papel === selectedPapel">
           <td>{{papel.id}}</td>
           <td>{{papel.descricao}}</td>
           <td>
             <p *ngFor="let funcao of papel.papelFuncao">
               {{funcao.funcao.descricao}}
             </p>
+          </td>
+          <td style="white-space: nowrap">
+            <a [routerLink]="['../papel', papel.id ]" class="btn btn-secondary">Edit</a>&nbsp;
+            <button (click)="delete(papel)" class="btn btn-danger">Delete</button>
           </td>
         </tr>
         </tbody>

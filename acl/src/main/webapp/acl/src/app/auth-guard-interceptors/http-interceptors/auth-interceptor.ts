@@ -6,7 +6,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import {catchError, throwError} from 'rxjs';
-import {LoginService} from "../../services/login.service";
+import {LoginService} from "../../pages/login/login.service";
 import jwt_decode from "jwt-decode";
 import {Router} from "@angular/router";
 import {ToastComponent} from "../../util/toast/toast.component";

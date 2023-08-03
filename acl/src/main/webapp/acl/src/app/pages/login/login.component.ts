@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {LoginService} from "../../services/login.service";
+import {LoginService} from "./login.service";
 import {Router} from "@angular/router";
 import {ToastComponent} from "../../util/toast/toast.component";
 import {ToastOptions} from "../../util/toast/toast-options";
-import {Login} from "../../model/login";
+import {Login} from "./login";
 import {Util} from "../../util/util";
 
 @Component({

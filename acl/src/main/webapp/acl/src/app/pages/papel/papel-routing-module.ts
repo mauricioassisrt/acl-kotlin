@@ -2,20 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PapelListaComponent } from './papel-lista/papel-lista.component';
+import {PapelEditComponent} from "./papel-edit/papel-edit.component";
 
-const routes: Routes = [
+export const PAPEL_ROUTES: Routes = [
   {
     path: '',
-    component: PapelListaComponent,
-    children: [
-      // { path: 'new', component: PapelCriacaoComponent },
-      // { path: 'edit/:id', component: PapelEdicaoComponent },
-    ],
+    component: PapelListaComponent
   },
+  {
+    path: ':id',
+    component: PapelEditComponent
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(PAPEL_ROUTES)],
   exports: [RouterModule],
 })
 export class PapelRoutingModule {}

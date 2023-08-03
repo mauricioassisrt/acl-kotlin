@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from "../../../services/login.service";
+import {LoginService} from "../../login/login.service";
+import {PapelFilter} from "../papel-filter";
+import {Papel} from "../papel";
+import {PapelService} from "../papel.service";
 
 @Component({
   selector: 'app-papel-lista',
@@ -12,21 +15,41 @@ export class PapelListaComponent implements OnInit {
   titulo: string = "Papel"
   loading: boolean = false
 
-  constructor(private authService: LoginService) {
+  filter = new PapelFilter();
+  selectedPapel!: Papel;
+  feedback: any = {};
+
+  get papelList(): Papel[] {
+    return this.papelService.papelList;
   }
 
-  ngOnInit(): void {
-    this.loading = true
-    this.authService.getDados().subscribe(
-      (response) => {
-        this.loading = false
-        this.papel = response.items;
-      },
-      (error) => {
+  constructor(private papelService: PapelService) {
+  }
 
-        this.loading = false
-        console.error(error);
-      }
-    );
+  ngOnInit() {
+    this.search();
+  }
+
+  search(): void {
+    this.papelService.load(this.filter);
+  }
+
+  select(selected: Papel): void {
+    this.selectedPapel = selected;
+  }
+
+  delete(papel: Papel): void {
+    if (confirm('Are you sure?')) {
+      this.papelService.delete(papel).subscribe(() => {
+          this.feedback = {type: 'success', message: 'Delete was successful!'};
+          setTimeout(() => {
+            this.search();
+          }, 1000);
+        },
+        err => {
+          this.feedback = {type: 'warning', message: 'Error deleting.'};
+        }
+      );
+    }
   }
 }
