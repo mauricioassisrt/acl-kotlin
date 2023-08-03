@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../../services/login.service";
+import { Component, OnInit } from '@angular/core';
+import {LoginService} from "../../../services/login.service";
 
 @Component({
-  selector: 'app-papel',
-  templateUrl: './papel.component.html',
-  styleUrls: ['./papel.component.css']
+  selector: 'app-papel-lista',
+  templateUrl: './papel-lista.component.html',
+  styleUrls: ['./papel-lista.component.css']
 })
-export class PapelComponent implements OnInit {
+export class PapelListaComponent implements OnInit {
+
   papel: any;
   titulo: string = "Papel"
   loading: boolean = false
@@ -28,5 +29,4 @@ export class PapelComponent implements OnInit {
       }
     );
   }
-
 }
