@@ -11,6 +11,7 @@ import {ApiResponseWithPagination} from "../../util/pagination/ApiResponseWithPa
 export class PapelService {
   papelList: Papel[] = [];
   apiResponseWithPagination: {}  = {}
+  loading: boolean = false
 
   constructor(private http: HttpClient) {
   }
@@ -22,15 +23,18 @@ export class PapelService {
     return this.http.get<Papel>(url, {params, headers});
   }
 
-  load(filter: PapelFilter): void {
+  load(filter: PapelFilter, loading: boolean): void {
+    this.loading = loading
     this.find(filter).subscribe(result => {
         this.papelList = result.items
         this.apiResponseWithPagination = result
+        this.loading = false
       },
       err => {
         console.error('error loading', err);
       }
     );
+
   }
 
   find(filter: PapelFilter):Observable<ApiResponseWithPagination<Papel>>{

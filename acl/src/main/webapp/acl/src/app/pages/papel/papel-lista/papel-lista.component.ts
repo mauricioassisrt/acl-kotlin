@@ -3,6 +3,7 @@ import {LoginService} from "../../login/login.service";
 import {PapelFilter} from "../papel-filter";
 import {Papel} from "../papel";
 import {PapelService} from "../papel.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-papel-lista',
@@ -20,6 +21,7 @@ export class PapelListaComponent implements OnInit {
   feedback: any = {};
 
   get papelList(): Papel[] {
+    this.loading = this.papelService.loading
     return this.papelService.papelList;
   }
 
@@ -31,7 +33,8 @@ export class PapelListaComponent implements OnInit {
   }
 
   search(): void {
-    this.papelService.load(this.filter);
+    this.papelService.load(this.filter, true);
+    this.loading = this.papelService.loading
   }
 
   select(selected: Papel): void {
@@ -39,17 +42,29 @@ export class PapelListaComponent implements OnInit {
   }
 
   delete(papel: Papel): void {
-    if (confirm('Are you sure?')) {
-      this.papelService.delete(papel).subscribe(() => {
-          this.feedback = {type: 'success', message: 'Delete was successful!'};
-          setTimeout(() => {
-            this.search();
-          }, 1000);
-        },
-        err => {
-          this.feedback = {type: 'warning', message: 'Error deleting.'};
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This action can't be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.papelService.delete(papel).subscribe(
+          () => {
+            this.feedback = { type: 'success', message: 'Delete was successful!' };
+            setTimeout(() => {
+              this.search();
+            }, 1000);
+          },
+          err => {
+            this.feedback = { type: 'warning', message: 'Error deleting.' };
+          }
+        );
+      }
+    });
   }
 }
