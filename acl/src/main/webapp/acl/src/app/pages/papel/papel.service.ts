@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Papel} from "./papel";
-import {EMPTY,Observable} from "rxjs";
+import {EMPTY, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {PapelFilter} from "./papel-filter";
 import {ApiResponseWithPagination} from "../../util/pagination/ApiResponseWithPagination";
@@ -12,7 +12,8 @@ export class PapelService {
   papelList: Papel[] = [];
   apiResponseWithPagination: {}  = {}
   loading: boolean = false
-
+  private loadingSubject = new Subject<boolean>();
+  loading$: Observable<boolean> = this.loadingSubject.asObservable();
   constructor(private http: HttpClient) {
   }
 
@@ -23,19 +24,19 @@ export class PapelService {
     return this.http.get<Papel>(url, {params, headers});
   }
 
-  load(filter: PapelFilter, loading: boolean): void {
-    this.loading = loading
+  load(filter: PapelFilter): void {
+    this.loadingSubject.next(true); // Ative o indicador de carregamento
     this.find(filter).subscribe(result => {
         this.papelList = result.items
         this.apiResponseWithPagination = result
-        this.loading = false
+        this.loadingSubject.next(false); // Desative o indicador após o carregamento
       },
       err => {
-        console.error('error loading', err);
+        this.loadingSubject.next(false); // Lida com erros também
       }
     );
-
   }
+
 
   find(filter: PapelFilter):Observable<ApiResponseWithPagination<Papel>>{
     // const url = `http://localhost:8080/api/papeis/`;
@@ -54,11 +55,11 @@ export class PapelService {
     let url = '';
     const headers = new HttpHeaders().set('content-type', 'application/json');
     if (entity.id) {
-      url = `http://www.angular.at/api/flight/${entity.id.toString()}`;
+      url = `http://localhost:8080/api/papeis/${entity.id.toString()}`;
       params = new HttpParams().set('ID', entity.id.toString());
       return this.http.put<Papel>(url, entity, {headers, params});
     } else {
-      url = `http://www.angular.at/api/flight`;
+      url = `http://localhost:8080/api/papeis/`;
       return this.http.post<Papel>(url, entity, {headers, params});
     }
   }

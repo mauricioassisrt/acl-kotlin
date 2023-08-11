@@ -50,7 +50,7 @@
 
     <div class="card-body" >
       <app-loading [loading]="loading"></app-loading>
-      <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+      <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
       <table class="table table-bordered">
         <thead>
         <tr>
@@ -60,7 +60,7 @@
           <th>Ação</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="!loading">
         <tr *ngFor="let papel of papelList" [class.active]="papel === selectedPapel">
           <td>{{papel.id}}</td>
           <td>{{papel.descricao}}</td>

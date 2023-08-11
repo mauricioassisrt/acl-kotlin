@@ -4,6 +4,7 @@ import {PapelFilter} from "../papel-filter";
 import {Papel} from "../papel";
 import {PapelService} from "../papel.service";
 import Swal from 'sweetalert2';
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-papel-lista',
@@ -14,27 +15,31 @@ export class PapelListaComponent implements OnInit {
 
   papel: any;
   titulo: string = "Papel"
-  loading: boolean = false
 
   filter = new PapelFilter();
   selectedPapel!: Papel;
   feedback: any = {};
+  loadingSubscription: Subscription;
+  loading: boolean = false; // Declare a variável 'loading' como um booleano
 
   get papelList(): Papel[] {
-    this.loading = this.papelService.loading
     return this.papelService.papelList;
   }
 
   constructor(private papelService: PapelService) {
+    this.loadingSubscription = this.papelService.loading$.subscribe(loading => {
+      this.loading = loading; // Atualize a propriedade this.loading
+    });
   }
-
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe(); // Importante para evitar vazamentos de memória
+  }
   ngOnInit() {
     this.search();
   }
 
   search(): void {
-    this.papelService.load(this.filter, true);
-    this.loading = this.papelService.loading
+    this.papelService.load(this.filter);
   }
 
   select(selected: Papel): void {

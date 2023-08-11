@@ -29,7 +29,7 @@
 
     <div class="card-body">
       <app-loading [loading]="loading"></app-loading>
-      <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+      <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
       <form *ngIf="papel" #editForm="ngForm" (ngSubmit)="save()">
 
         <div class="form-group">
