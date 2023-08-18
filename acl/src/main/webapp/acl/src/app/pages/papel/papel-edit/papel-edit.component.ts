@@ -60,7 +60,7 @@ export class PapelEditComponent implements OnInit {
     this.loading = true
     if (this.validarPreenchimentoCampos()) {
       this.papelService.save(this.papel).subscribe(
-        papel => {
+        () => {
           Util.exibeToastSalvoComSucesso(this.toastOptions, this.toastComponent, "O registro " + this.papel.descricao + " foi atualizado com sucesso!")
           Util.acessarRotaEspecifica(this.router, 1000, '/papel')
           this.loading = false

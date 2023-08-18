@@ -6,7 +6,7 @@ import {Subscription} from "rxjs";
 import {ToastComponent} from "../../../util/toast/toast.component";
 import {ToastOptions} from "../../../util/toast/toast-options";
 import {Util} from "../../../util/util";
-import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-papel-lista',
