@@ -1,5 +1,7 @@
 <meta charset="UTF-8">
 <section class="content-header">
+  <app-toast #toast
+             [options]="toastOptions"></app-toast>
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
@@ -9,7 +11,7 @@
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
           <li class="breadcrumb-item"><a href="/papel">Papel</a></li>
-          <li class="breadcrumb-item active">Edição</li>
+          <li class="breadcrumb-item active">{{telaAtual}}</li>
         </ol>
       </div>
     </div>
@@ -23,28 +25,29 @@
   <div class="card card-default">
     <div class="card-header">
       <h3 class="card-title">
-        Criar/Editar
+       {{telaAtual}}
       </h3>
     </div>
 
     <div class="card-body">
       <app-loading [loading]="loading"></app-loading>
-      <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
-      <form *ngIf="papel" #editForm="ngForm" (ngSubmit)="save()">
+      <form *ngIf="papel"
+            #editForm="ngForm"
+            (ngSubmit)="save()">
 
         <div class="form-group">
           <label for="id">Id</label>
-          <input type="number" disabled [(ngModel)]="papel.id" id="id" name="id" class="form-control">
+          <input type="number" disabled  [(ngModel)]="papel.id" id="id" name="id" class="form-control">
         </div>
 
         <div class="form-group">
           <label for="nome">Nome</label>
-          <input [(ngModel)]="papel.nome" id="nome" name="nome" class="form-control">
+          <input #nomeInput   [(ngModel)]="papel.nome" [disabled]="disabled" id="nome" name="nome" class="form-control">
         </div>
 
         <div class="form-group">
           <label for="descricao">Descrição</label>
-          <input [(ngModel)]="papel.descricao" id="descricao" name="descricao" class="form-control">
+          <input #descricaoInput [(ngModel)]="papel.descricao"   [disabled]="disabled" id="descricao" name="descricao" class="form-control">
         </div>
 
         <div class="btn-group mt-3" role="group">
@@ -53,9 +56,7 @@
         </div>
       </form>
     </div>
-    <div class="card-footer clearfix">
 
-    </div>
   </div>
 </div>
 <!-- /.content -->

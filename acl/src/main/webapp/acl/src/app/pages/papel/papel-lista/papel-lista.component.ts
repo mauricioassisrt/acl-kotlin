@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {LoginService} from "../../login/login.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PapelFilter} from "../papel-filter";
 import {Papel} from "../papel";
 import {PapelService} from "../papel.service";
-import Swal from 'sweetalert2';
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
+import {ToastComponent} from "../../../util/toast/toast.component";
+import {ToastOptions} from "../../../util/toast/toast-options";
+import {Util} from "../../../util/util";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-papel-lista',
@@ -12,7 +14,8 @@ import {Observable, Subscription} from "rxjs";
   styleUrls: ['./papel-lista.component.css']
 })
 export class PapelListaComponent implements OnInit {
-
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
+  toastOptions: ToastOptions = new ToastOptions()
   papel: any;
   titulo: string = "Papel"
 
@@ -31,9 +34,11 @@ export class PapelListaComponent implements OnInit {
       this.loading = loading; // Atualize a propriedade this.loading
     });
   }
+
   ngOnDestroy() {
     this.loadingSubscription.unsubscribe(); // Importante para evitar vazamentos de memória
   }
+
   ngOnInit() {
     this.search();
   }
@@ -47,29 +52,21 @@ export class PapelListaComponent implements OnInit {
   }
 
   delete(papel: Papel): void {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "This action can't be undone!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.papelService.delete(papel).subscribe(
-          () => {
-            this.feedback = { type: 'success', message: 'Delete was successful!' };
-            setTimeout(() => {
-              this.search();
-            }, 1000);
-          },
-          err => {
-            this.feedback = { type: 'warning', message: 'Error deleting.' };
-          }
-        );
-      }
+    Util.confirmDelete(() => {
+      this.loading = true;
+      this.papelService.delete(papel).subscribe(
+        () => {
+          Util.exibeToastSalvoComSucesso(this.toastOptions, this.toastComponent, "Registro excluido com sucesso!")
+          setTimeout(() => {
+            this.search();
+          }, 1000);
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+          Util.exibeToastError(this.toastOptions, this.toastComponent, "Erro ao excluir registro")
+        }
+      );
     });
   }
 }

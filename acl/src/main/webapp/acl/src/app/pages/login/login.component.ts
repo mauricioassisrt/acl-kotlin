@@ -59,23 +59,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private exibeToastError() {
-    ToastOptions.montaToaster(
-      "Existem campos sem preenchimento",
-      "Campos obrigatórios",
-      "bg-danger",
-      this.toastOptions,
-      this.toastComponent)
-  }
-
-
   private validarPreenchimentoCampos(): boolean {
     let isValid = true;
     if (!this.login.email) {
       isValid = false;
       this.loading = false
       Util.adicionaEstiloErrorInput(this.emailInput.nativeElement, this.renderer)
-      this.exibeToastError()
+      Util.exibeToastErrorCamposObrigatorios(this.toastOptions, this.toastComponent)
     } else {
       Util.removerEstiloErrorInput(this.emailInput.nativeElement, this.renderer)
     }
@@ -84,7 +74,7 @@ export class LoginComponent implements OnInit {
       isValid = false;
       this.loading = false
       Util.adicionaEstiloErrorInput(this.senhaInput.nativeElement, this.renderer)
-      this.exibeToastError()
+      Util.exibeToastErrorCamposObrigatorios(this.toastOptions, this.toastComponent)
     } else {
       Util.removerEstiloErrorInput(this.senhaInput.nativeElement, this.renderer)
     }

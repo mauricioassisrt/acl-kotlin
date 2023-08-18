@@ -1,43 +1,43 @@
 import {ToastComponent} from "./toast.component";
 
 export class ToastOptions {
-  private _tituloError: string = "";
-  private _menssagemError: string = "";
-  private _classError: string = "";
+  private _titulo: string = "";
+  private _menssagem: string = "";
+  private _class: string = "";
 
 
-  get tituloError(): string {
-    return this._tituloError;
+  get titulo(): string {
+    return this._titulo;
   }
 
-  set tituloError(value: string) {
-    this._tituloError = value;
+  set titulo(value: string) {
+    this._titulo = value;
   }
 
-  get menssagemError(): string {
-    return this._menssagemError;
+  get menssagem(): string {
+    return this._menssagem;
   }
 
-  set menssagemError(value: string) {
-    this._menssagemError = value;
+  set menssagem(value: string) {
+    this._menssagem = value;
   }
 
-  get classError(): string {
-    return this._classError;
+  get class(): string {
+    return this._class;
   }
 
-  set classError(value: string) {
-    this._classError = value;
+  set class(value: string) {
+    this._class = value;
   }
 
-  static montaToaster(mensagemError: string,
-                      tituloError: string,
-                      classError: string,
+  static montaToaster(mensagem: string,
+                      titulo: string,
+                      classStyle: string,
                       toastOptions: ToastOptions,
                       toastComponent: ToastComponent) {
-    toastOptions.menssagemError = mensagemError;
-    toastOptions.tituloError = tituloError;
-    toastOptions.classError = classError;
+    toastOptions.menssagem = mensagem;
+    toastOptions.titulo = titulo;
+    toastOptions.class = classStyle;
     toastComponent.show();
   }
 }
