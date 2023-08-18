@@ -8,21 +8,23 @@ import { PapelEditComponent } from './papel-edit/papel-edit.component';
 import { RouterModule } from '@angular/router';
 import {PapelService} from "./papel.service";
 import {FormsModule} from "@angular/forms";
+import {PaginatorModule} from "../../util/paginator/paginator.module";
 
 @NgModule({
   declarations: [
     PapelListaComponent,
     PapelEditComponent,
   ],
-  imports: [
-    CommonModule,
-    LoadingModule,
-    ToastModule,
-    PapelRoutingModule,
-    RouterModule.forChild(PAPEL_ROUTES),
-    FormsModule,
-    // Outros módulos que você possa precisar aqui
-  ],
+    imports: [
+        CommonModule,
+        LoadingModule,
+        ToastModule,
+        PapelRoutingModule,
+        PaginatorModule,
+        RouterModule.forChild(PAPEL_ROUTES),
+        FormsModule,
+        // Outros módulos que você possa precisar aqui
+    ],
   providers: [PapelService],
   exports: [
     PapelListaComponent

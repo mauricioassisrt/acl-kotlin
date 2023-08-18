@@ -78,11 +78,12 @@
       </table>
     </div>
     <div class="card-footer clearfix">
-      <ul class="pagination pagination-sm m-0 float-right">
-        <li class="page-item"><a class="page-link" href="#">«</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">»</a></li>
-      </ul>
+      <app-paginator
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (nextPage)="goToNextPage()"
+        (prevPage)="goToPrevPage()"
+      ></app-paginator>
     </div>
   </div>
 </div>

@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-12 col-md-5">
+    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+      <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+      <ul class="pagination justify-content-end">
+        <li class="paginate_button page-item previous" [class.disabled]="currentPage === 0" id="example1_previous">
+          <a  aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link cursor-pointer"
+             (click)="currentPage !== 0 && prevPage.emit()"> <i class="fas fa-angle-left"></i></a>
+        </li>
+
+        <li class="paginate_button page-item next" [class.disabled]="currentPage === totalPages - 1" id="example1_next">
+          <a aria-controls="example1"  tabindex="0" class="page-link cursor-pointer"
+             (click)="currentPage !== totalPages - 1 && nextPage.emit()"><i class="fas fa-angle-right"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

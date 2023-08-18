@@ -14,34 +14,36 @@ import {PapelModule} from "./pages/papel/papel.module";
 import {LoginModule} from "./pages/login/login.module";
 import {LoadingModule} from "./util/loading/loading.module";
 import {ToastModule} from "./util/toast/toast.module";
+import {PaginatorModule} from "./util/paginator/paginator.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    NotFoundComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    LoginModule,
-    PapelModule,
-    LoadingModule,
-    ToastModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    LoginService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        NotFoundComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        LoginModule,
+        PapelModule,
+        PaginatorModule,
+        LoadingModule,
+        ToastModule
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
+        LoginService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

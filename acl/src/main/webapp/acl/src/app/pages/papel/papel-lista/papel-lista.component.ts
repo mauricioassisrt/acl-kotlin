@@ -7,7 +7,6 @@ import {ToastComponent} from "../../../util/toast/toast.component";
 import {ToastOptions} from "../../../util/toast/toast-options";
 import {Util} from "../../../util/util";
 
-
 @Component({
   selector: 'app-papel-lista',
   templateUrl: './papel-lista.component.html',
@@ -16,18 +15,19 @@ import {Util} from "../../../util/util";
 export class PapelListaComponent implements OnInit {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   toastOptions: ToastOptions = new ToastOptions()
+  papelList: Papel[] = [];
+  currentPage: number = 0
+  totalItems: number = 0
+  totalPages: number = 0
   papel: any;
   titulo: string = "Papel"
-
+  parametrosPagina: {} = {}
   filter = new PapelFilter();
   selectedPapel!: Papel;
   feedback: any = {};
   loadingSubscription: Subscription;
   loading: boolean = false; // Declare a variável 'loading' como um booleano
 
-  get papelList(): Papel[] {
-    return this.papelService.papelList;
-  }
 
   constructor(private papelService: PapelService) {
     this.loadingSubscription = this.papelService.loading$.subscribe(loading => {
@@ -42,9 +42,31 @@ export class PapelListaComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
+  goToNextPage() {
+    this.currentPage++;
+    this.search()
+    // Aqui você pode chamar uma função para buscar os registros da próxima página
+  }
 
+  goToPrevPage() {
+    this.currentPage--;
+    this.search()
+    // Aqui você pode chamar uma função para buscar os registros da página anterior
+  }
   search(): void {
-    this.papelService.load(this.filter);
+    this.papelService.load(this.filter, this.currentPage).subscribe(
+      parametrosPagina => {
+        // Faça o que precisa com parametrosPagina
+        this.papelList = parametrosPagina.items
+        this.totalItems = parametrosPagina.totalItems
+        this.totalPages = parametrosPagina.totalPages
+        this.currentPage = parametrosPagina.currentPage
+      },
+      () => {
+        // Lida com erros, se necessário
+      }
+    );
+     this.papelService.load(this.filter, this.currentPage);
   }
 
   select(selected: Papel): void {

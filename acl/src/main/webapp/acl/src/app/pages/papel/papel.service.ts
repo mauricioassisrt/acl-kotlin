@@ -10,9 +10,8 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class PapelService {
-  papelList: Papel[] = [];
+
   url:string = `${environment.api}/api/papeis/`
-  apiResponseWithPagination: {}  = {}
   private loadingSubject = new Subject<boolean>();
   loading$: Observable<boolean> = this.loadingSubject.asObservable();
   constructor(private http: HttpClient) {
@@ -24,21 +23,35 @@ export class PapelService {
     return this.http.get<Papel>(`${this.url}${id}`, {params, headers});
   }
 
-  load(filter: PapelFilter): void {
+  load(filter: PapelFilter, numeroPagina:number): Observable<ApiResponseWithPagination<Papel>> {
     this.loadingSubject.next(true); // Ative o indicador de carregamento
-    this.find(filter).subscribe(result => {
-        this.papelList = result.items
-        this.apiResponseWithPagination = result
-        this.loadingSubject.next(false); // Desative o indicador após o carregamento
-      },
-      () => {
-        this.loadingSubject.next(false); // Lida com erros também
-      }
-    );
+
+    return new Observable<ApiResponseWithPagination<Papel>>(observer => {
+      this.find(filter,numeroPagina ).subscribe(
+        result => {
+          const parametrosPagina: ApiResponseWithPagination<Papel> = {
+            currentPage: result.currentPage,
+            items: result.items,
+            totalItems: result.totalItems,
+            totalPages: result.totalPages,
+          };
+
+          this.loadingSubject.next(false); // Desative o indicador após o carregamento
+
+          observer.next(parametrosPagina); // Emita o valor para o observer
+          observer.complete(); // Complete o Observable após emitir o valor
+        },
+        error => {
+          this.loadingSubject.next(false); // Lida com erros também
+          observer.error(error); // Transmita o erro para o observer, se necessário
+          observer.complete(); // Complete o Observable em caso de erro
+        }
+      );
+    });
   }
 
 
-  find(filter: PapelFilter):Observable<ApiResponseWithPagination<Papel>>{
+  find(filter: PapelFilter, numeroPagina:number):Observable<ApiResponseWithPagination<Papel>>{
     // const url = `http://localhost:8080/api/papeis/`;
     // const headers = new HttpHeaders().set('Accept', 'application/json');
     //
@@ -47,7 +60,7 @@ export class PapelService {
     //   'descricao': filter.descricao,
     // };
 
-    return this.http.get<ApiResponseWithPagination<Papel>>(this.url)
+    return this.http.get<ApiResponseWithPagination<Papel>>(this.url+"?page="+numeroPagina)
   }
 
   save(entity: Papel): Observable<Papel> {
