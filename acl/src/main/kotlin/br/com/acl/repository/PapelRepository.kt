@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PapelRepository : JpaRepository<PapelModel, Long> {
     override fun findAll(pageable: Pageable): Page<PapelModel>
+    fun findByNomeContainingIgnoreCase(nome: String, pageable: Pageable): Page<PapelModel>
 }

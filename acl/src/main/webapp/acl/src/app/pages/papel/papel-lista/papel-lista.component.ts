@@ -23,12 +23,12 @@ export class PapelListaComponent implements OnInit {
   titulo: string = "Papel"
   parametrosPagina: {} = {}
   filter = new PapelFilter();
-  selectedPapel!: Papel;
-  feedback: any = {};
   loadingSubscription: Subscription;
   loading: boolean = false; // Declare a variável 'loading' como um booleano
 
-
+  selectedPapel: Papel | null = null;
+  currentSortColumn: keyof Papel = 'id';
+  isSortAscending: boolean = true;
   constructor(private papelService: PapelService) {
     this.loadingSubscription = this.papelService.loading$.subscribe(loading => {
       this.loading = loading; // Atualize a propriedade this.loading
@@ -42,17 +42,14 @@ export class PapelListaComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
-  goToNextPage() {
-    this.currentPage++;
-    this.search()
-    // Aqui você pode chamar uma função para buscar os registros da próxima página
+  avancarVoltarPagina(proximaAnterior: boolean){
+    if(proximaAnterior)
+      this.currentPage++
+    else
+      this.currentPage--
+    this.search();
   }
 
-  goToPrevPage() {
-    this.currentPage--;
-    this.search()
-    // Aqui você pode chamar uma função para buscar os registros da página anterior
-  }
   search(): void {
     this.papelService.load(this.filter, this.currentPage).subscribe(
       parametrosPagina => {
@@ -66,7 +63,6 @@ export class PapelListaComponent implements OnInit {
         // Lida com erros, se necessário
       }
     );
-     this.papelService.load(this.filter, this.currentPage);
   }
 
   select(selected: Papel): void {
@@ -75,14 +71,12 @@ export class PapelListaComponent implements OnInit {
 
   delete(papel: Papel): void {
     Util.confirmDelete(() => {
-      this.loading = true;
       this.papelService.delete(papel).subscribe(
         () => {
           Util.exibeToastSalvoComSucesso(this.toastOptions, this.toastComponent, "Registro excluido com sucesso!")
-          setTimeout(() => {
-            this.search();
-          }, 1000);
-          this.loading = false;
+          const posicao = this.papelList.findIndex(papels => papels.id === papel.id)
+          if(posicao !== -1)
+            this.papelList.splice(posicao, 1)
         },
         () => {
           this.loading = false;
@@ -90,5 +84,20 @@ export class PapelListaComponent implements OnInit {
         }
       );
     });
+  }
+
+  sort(column: keyof Papel) {
+    if (this.currentSortColumn === column) {
+      this.isSortAscending = !this.isSortAscending;
+      this.filter.sortBy = column
+    } else {
+      this.currentSortColumn = column;
+      this.isSortAscending = true;
+      this.currentPage = 0
+    }
+    this.filter.sortOrder = this.isSortAscending ? 'asc' : 'desc';
+
+
+    this.search()
   }
 }

@@ -51,16 +51,27 @@ export class PapelService {
   }
 
 
-  find(filter: PapelFilter, numeroPagina:number):Observable<ApiResponseWithPagination<Papel>>{
-    // const url = `http://localhost:8080/api/papeis/`;
-    // const headers = new HttpHeaders().set('Accept', 'application/json');
-    //
-    // const params = {
-    //   'nome': filter.nome,
-    //   'descricao': filter.descricao,
-    // };
 
-    return this.http.get<ApiResponseWithPagination<Papel>>(this.url+"?page="+numeroPagina)
+  find(filter: PapelFilter, numeroPagina: number): Observable<ApiResponseWithPagination<Papel>> {
+    let queryParams = `page=${numeroPagina}`;
+
+    if (filter.nome) {
+      queryParams += `&nome=${filter.nome}`;
+    }
+
+    if (filter.descricao) {
+      queryParams += `&descricao=${filter.descricao}`;
+    }
+
+    if (filter.sortOrder) {
+      queryParams += `&sortOrder=${filter.sortOrder}`;
+    }
+    if (filter.sortBy) {
+      queryParams += `&sortBy=${filter.sortBy}`;
+    }
+
+
+    return this.http.get<ApiResponseWithPagination<Papel>>(`${this.url}?${queryParams}`);
   }
 
   save(entity: Papel): Observable<Papel> {

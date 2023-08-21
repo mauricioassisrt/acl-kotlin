@@ -16,7 +16,9 @@ class PapelService {
 
     fun findAll(pageable: Pageable): Page<PapelModel> =
         papelRepository.findAll(pageable)
-
+    fun findByNomeContainingIgnoreCase(nome: String, pageable: Pageable): Page<PapelModel> {
+        return papelRepository.findByNomeContainingIgnoreCase(nome, pageable)
+    }
 
     fun findById(id: Long): PapelModel =
         papelRepository.findById(id).orElseThrow {
@@ -25,7 +27,7 @@ class PapelService {
 
     fun create(papel: PapelModel) = papelRepository.save(papel)
     fun delete(id: Long) {
-        if (!papelRepository.existsById(id!!))
+        if (!papelRepository.existsById(id))
             throw NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
         papelRepository.delete(findById(id))
     }

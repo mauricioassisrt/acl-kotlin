@@ -51,8 +51,8 @@ export class Util {
 
   static confirmDelete(callback: () => void): void {
     Swal.fire({
-      title: 'Apagar o registro?',
-      text: "Tem certeza que deseja excluir o registro !",
+      title: 'Tem certeza que deseja excluir o registro ?',
+      text: "",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

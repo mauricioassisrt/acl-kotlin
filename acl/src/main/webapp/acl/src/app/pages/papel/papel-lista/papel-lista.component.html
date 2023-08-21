@@ -1,7 +1,6 @@
-<meta charset="UTF-8">
+
 <app-toast #toast
            [options]="toastOptions"></app-toast>
-<br>
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -18,71 +17,67 @@
   </div>
 </section>
 <div class="container-fluid">
-  <div class="card card-outline card-info">
+  <div class="card card-primary card-outline">
     <div class="card-header">
-      <h3 class="card-title">
-        <b>
-          Listagem de papeis
-        </b>
-      </h3>
-
-    </div>
-    <div class="card-header">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-sm-12">
           <form #f="ngForm" class="form-inline">
-            <div class="form-group">
-              <input [(ngModel)]="filter.nome" id="from" name="from" class="form-control" placeholder="Digite....">
+            <div class="form-group mb-2">
+              <input [(ngModel)]="filter.nome" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" id="from" name="from" class="form-control" placeholder="Digite....">
             </div>
-            <!--          <div class="form-group">-->
-            <!--            <label for="to">To:</label>-->
-            <!--            <input [(ngModel)]="filter.descricao" id="to" name="to" class="form-control">-->
-            <!--          </div>-->
-            <button (click)="search()" [disabled]="!f?.valid" class="btn btn-primary mt-2 mb-2"><i
-              class="fa fa-search"></i></button>
+            <button (click)="search()" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" [disabled]="!f?.valid" class="btn btn-primary  mb-2"><i class="fa fa-search"></i></button>
           </form>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-6 col-sm-12 text-md-right text-sm-left mt-md-0 mt-2">
           <a [routerLink]="['../papel/', 'new']" class="btn btn-default mb-2"><i class="fas fa-plus"></i> Novo</a>
         </div>
       </div>
     </div>
-
-    <div class="card-body" >
+    <div class="card-body table-responsive" >
       <app-loading [loading]="loading"></app-loading>
-      <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
-      <table class="table table-bordered">
+      <table class="table table-hover">
         <thead>
         <tr>
-          <th style="width: 10px">Código</th>
-          <th>Nome</th>
-          <th>Descrição</th>
-          <th>Ação</th>
+          <th class="cursor-pointer" style="width: 7%" (click)="sort('id')">
+            Código
+            <i class="fas" [ngClass]="{'fa-sort-amount-up': currentSortColumn === 'id' && isSortAscending, 'fa-sort-amount-down': currentSortColumn === 'id' && !isSortAscending}"></i>
+          </th>
+          <th class="cursor-pointer"  (click)="sort('nome')">Nome
+            <i class="fas" [ngClass]="{'fa-sort-amount-up': currentSortColumn === 'nome' && isSortAscending, 'fa-sort-amount-down': currentSortColumn === 'nome' && !isSortAscending}"></i>
+          </th>
+          <th class="cursor-pointer"  (click)="sort('descricao')">Descrição
+            <i class="fas" [ngClass]="{'fa-sort-amount-up': currentSortColumn === 'descricao' && isSortAscending, 'fa-sort-amount-down': currentSortColumn === 'descricao' && !isSortAscending}"></i>
+          </th>
+          <th style="width: 10%" class="text-center">Ação</th>
         </tr>
         </thead>
-        <tbody *ngIf="!loading">
-        <tr *ngFor="let papel of papelList" [class.active]="papel === selectedPapel">
-          <td>{{papel.id}}</td>
-          <td>{{papel.descricao}}</td>
-          <td>
-            <p *ngFor="let funcao of papel.papelFuncao">
-              {{funcao.funcao.descricao}}
-            </p>
-          </td>
-          <td style="white-space: nowrap">
-            <a [routerLink]="['../papel', papel.id ]" class="btn btn-secondary"><i class="fas fa-edit"></i></a>&nbsp;
-            <button (click)="delete(papel)" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
+        <tbody>
+        <ng-container *ngIf="papelList.length > 0; else noRecords">
+          <tr *ngFor="let papel of papelList" [class.active]="papel === selectedPapel">
+            <td class="text-center">{{papel.id}}</td>
+            <td>{{papel.nome}}</td>
+            <td>{{papel.descricao}}</td>
+            <td style="white-space: nowrap" class="text-center align-middle">
+              <a [routerLink]="['../papel', papel.id]" class="btn btn-secondary"><i class="fas fa-edit"></i></a>&nbsp;
+              <button (click)="delete(papel)" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noRecords>
+          <tr>
+            <td colspan="4" class="text-center">Nenhum registro disponível.</td>
+          </tr>
+        </ng-template>
         </tbody>
       </table>
+
     </div>
     <div class="card-footer clearfix">
       <app-paginator
         [currentPage]="currentPage"
         [totalPages]="totalPages"
-        (nextPage)="goToNextPage()"
-        (prevPage)="goToPrevPage()"
+        (nextPage)="avancarVoltarPagina(true)"
+        (prevPage)="avancarVoltarPagina(false)"
       ></app-paginator>
     </div>
   </div>
