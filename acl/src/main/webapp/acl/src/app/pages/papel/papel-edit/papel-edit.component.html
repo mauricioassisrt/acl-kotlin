@@ -18,7 +18,7 @@
 </section>
 
 <!-- /.content-header -->
-
+<app-loading [loading]="loading"></app-loading>
 <!-- Main content -->
 <div class="container-fluid">
   <div class="card card-primary card-outline">
@@ -31,7 +31,7 @@
           #editForm="ngForm"
           (ngSubmit)="save()">
     <div class="card-body">
-      <app-loading [loading]="loading"></app-loading>
+
 
 
         <div class="form-group">

@@ -3,7 +3,7 @@ import {Papel} from "../papel";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {PapelService} from "../papel.service";
 import {map, switchMap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import { of } from 'rxjs';
 import {ToastOptions} from "../../../util/toast/toast-options";
 import {ToastComponent} from "../../../util/toast/toast.component";
 import {Util} from "../../../util/util";

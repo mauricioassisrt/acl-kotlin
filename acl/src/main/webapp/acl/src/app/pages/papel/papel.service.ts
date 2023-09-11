@@ -18,6 +18,7 @@ export class PapelService {
   }
 
   findById(id: string): Observable<Papel> {
+   // this.loadingSubject.next(true);
     const params = { 'id': id };
     const headers = new HttpHeaders().set('Accept', 'application/json');
     return this.http.get<Papel>(`${this.url}${id}`, {params, headers});

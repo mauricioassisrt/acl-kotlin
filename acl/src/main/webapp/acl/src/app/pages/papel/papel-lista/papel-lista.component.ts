@@ -16,9 +16,9 @@ export class PapelListaComponent implements OnInit {
   @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   toastOptions: ToastOptions = new ToastOptions()
   papelList: Papel[] = [];
-  currentPage: number = 0
-  totalItems: number = 0
-  totalPages: number = 0
+  currentPage: number = -1
+  totalItems: number = -1
+  totalPages: number = -1
   papel: any;
   titulo: string = "Papel"
   parametrosPagina: {} = {}
