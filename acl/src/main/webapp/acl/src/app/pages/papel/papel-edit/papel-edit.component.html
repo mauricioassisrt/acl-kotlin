@@ -20,14 +20,14 @@
 <!-- /.content-header -->
 <app-loading [loading]="loading"></app-loading>
 <!-- Main content -->
-<div class="container-fluid">
+<div class="container-fluid"  *ngIf="papel">
   <div class="card card-primary card-outline">
     <div class="card-header">
       <h3 class="card-title">
        {{telaAtual}}
       </h3>
     </div>
-    <form *ngIf="papel"
+    <form
           #editForm="ngForm"
           (ngSubmit)="save()">
     <div class="card-body">
