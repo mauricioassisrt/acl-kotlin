@@ -27,15 +27,19 @@
               <input [(ngModel)]="filter.nome" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" id="from" name="from" class="form-control" placeholder="Digite....">
             </div>
             <button (click)="search()" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" [disabled]="!f?.valid" class="btn btn-primary  mb-2"><i class="fa fa-search"></i></button>
+            <button (click)="openDialog()" class="btn btn-primary  mb-2 ml-3"><i class="fa fa-filter"></i></button>
+            <button *ngIf="selectedOption !=  '' " class="btn btn-primary  mb-2 ml-3">{{selectedOption}}</button>
           </form>
+
         </div>
         <div class="col-md-6 col-sm-12 text-md-right text-sm-left mt-md-0 mt-2">
-          <a [routerLink]="['../papel/', 'new']" class="btn btn-default mb-2"><i class="fas fa-plus"></i> Novo</a>
+          <a [routerLink]="['../papel/', 'new']" class="btn btn-primary  mb-2"><i class="fas fa-plus"></i> Novo</a>
         </div>
       </div>
     </div>
     <div class="card-body table-responsive" >
-
+      <!-- Use o diálogo em um ngIf para exibi-lo quando necessário -->
+      <app-dialog-box *ngIf="showDialog" (optionSelected)="handleOptionSelected($event)" [receivedObject]="objectList"></app-dialog-box>
       <table class="table table-hover">
         <thead>
         <tr>

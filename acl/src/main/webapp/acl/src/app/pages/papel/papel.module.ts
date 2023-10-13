@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import {PapelService} from "./papel.service";
 import {FormsModule} from "@angular/forms";
 import {PaginatorModule} from "../../util/paginator/paginator.module";
+import {DialogBoxModule} from "../../util/dialog-box/dialog-box.module";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {PaginatorModule} from "../../util/paginator/paginator.module";
         PaginatorModule,
         RouterModule.forChild(PAPEL_ROUTES),
         FormsModule,
+        DialogBoxModule,
         // Outros módulos que você possa precisar aqui
     ],
   providers: [PapelService],

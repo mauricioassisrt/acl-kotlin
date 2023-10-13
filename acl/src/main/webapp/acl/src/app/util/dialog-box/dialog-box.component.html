@@ -1,0 +1,9 @@
+
+      <div class="col-md-2 ">
+        <p>Selecione uma opção:</p>
+        <select class="form-control" [(ngModel)]="selectedOption" (click)="onOK()">
+          <option *ngFor="let objeto of receivedObject" [value]="objeto.value">{{objeto.name}}</option>
+        </select>
+
+      </div>
+

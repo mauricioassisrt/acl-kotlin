@@ -15,6 +15,8 @@ import {LoginModule} from "./pages/login/login.module";
 import {LoadingModule} from "./util/loading/loading.module";
 import {ToastModule} from "./util/toast/toast.module";
 import {PaginatorModule} from "./util/paginator/paginator.module";
+import { DialogBoxComponent } from './util/dialog-box/dialog-box.component';
+import {DialogBoxModule} from "./util/dialog-box/dialog-box.module";
 
 @NgModule({
     declarations: [
@@ -33,7 +35,8 @@ import {PaginatorModule} from "./util/paginator/paginator.module";
         PapelModule,
         PaginatorModule,
         LoadingModule,
-        ToastModule
+        ToastModule,
+        DialogBoxModule
     ],
     providers: [
         {

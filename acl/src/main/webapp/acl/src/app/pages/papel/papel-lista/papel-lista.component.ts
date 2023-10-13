@@ -29,12 +29,28 @@ export class PapelListaComponent implements OnInit {
   selectedPapel: Papel | null = null;
   currentSortColumn: keyof Papel = 'id';
   isSortAscending: boolean = true;
+  campoFiltro: string = ""
   constructor(private papelService: PapelService) {
     this.loadingSubscription = this.papelService.loading$.subscribe(loading => {
       this.loading = loading; // Atualize a propriedade this.loading
     });
   }
+  showDialog = false;
+  selectedOption: string = '';
+  objectList = [
+    { name: 'Nome', value: 'nome' },
+    { name: 'Descrição', value: 'descricao' },
 
+  ];
+  openDialog() {
+    this.showDialog = true;
+  }
+
+  handleOptionSelected(option: string) {
+    // Receba a opção selecionada do diálogo
+    this.selectedOption = option;
+    this.showDialog = false; // Feche o diálogo após a seleção
+  }
   ngOnDestroy() {
     this.loadingSubscription.unsubscribe(); // Importante para evitar vazamentos de memória
   }
